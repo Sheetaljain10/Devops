@@ -1,0 +1,20 @@
+python -m pip install kafka-python
+python -m pip install kazoo
+
+docker-compose up -d
+docker ps 
+
+testing:
+
+python producer.py
+python consumer.py
+python topic_management.py
+python manageTopic.py
+docker exec -it kafka kafka-topics --list --bootstrap-server localhost:9092
+python zooConnect.py 
+docker exec -it zookeeper zookeeper-shell localhost:2181
+ls /
+python manageGroups.py
+docker exec -it kafka kafka-consumer-groups --bootstrap-server localhost:9092 --all-groups --describe
+docker-compose down
+docker system prune -f

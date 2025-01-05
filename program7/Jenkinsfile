@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Build docker images for Prometheus, Grafana, and Python app
+                    sh 'docker build -t delivery-monitoring .'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deploy services to Docker containers
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    // Verify that the services are up and running
+                    sh 'curl http://localhost:8000/metrics'
+                }
+            }
+        }
+    }
+}

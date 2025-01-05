@@ -1,0 +1,4 @@
+docker build -t flask-app .
+python manage_container.py
+python container_management.py
+python health_check.py
